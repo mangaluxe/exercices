@@ -18,11 +18,17 @@ public class Main {
 
         CurrencyConverter currencyConverter = new CurrencyConverter();
 
-        currencyConverter.convert("EUR", "USD", 100); // 110.00000000000001 USD
-        currencyConverter.convert("EUR", "USD", 150); // 165.0 USD
+        // Utilisation de l'adaptateur pour effectuer la conversion
+        CurrencyAdapter currencyAdapter = new CurrencyConverterAdapter();
 
-        currencyConverter.convert("USD", "EUR", 100); // 90.9090909090909 EUR
-        currencyConverter.convert("USD", "EUR", 150); // 136.36363636363637 EUR
+        // Test de la conversion de USD à EUR
+        currencyAdapter.convert("USD", "EUR", 100); // 100 USD to EUR
+
+        // Test de la conversion de EUR à USD
+        currencyAdapter.convert("EUR", "USD", 100); // 100 EUR to USD
+
+
+
 
     }
 }
