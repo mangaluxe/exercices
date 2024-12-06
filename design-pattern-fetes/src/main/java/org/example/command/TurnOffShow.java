@@ -1,6 +1,6 @@
 package org.example.command;
 
-public class TurnOffShow {
+public class TurnOffShow implements Command {
 
     // ----- Propriétés -----
 
