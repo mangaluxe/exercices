@@ -3,6 +3,7 @@ package org.example.booksansbdd.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.example.booksansbdd.annotation.ExceptionHandler;
 import org.springframework.stereotype.Component;
 
 
@@ -10,9 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExceptionAspect {
 
-    @AfterThrowing(pointcut = "execution(* org.example.booksansbdd.service.BookService.*(..))", throwing = "exception")
-    public void afterThrowing (Exception exception) {
-        System.out.println("Une exception a été levée : " + exception.getMessage());
+    /**
+     * Log les exceptions des méthodes annotées avec @ExceptionHandler
+     */
+    @AfterThrowing(pointcut = "@annotation(exceptionHandler)", throwing = "exception")
+    public void afterThrowing(JoinPoint joinPoint, Exception exception, ExceptionHandler exceptionHandler) {
+        String methodName = joinPoint.getSignature().getName();
+        System.out.println("Exception dans la méthode : " + methodName);
+        System.out.println("Message : " + exception.getMessage());
     }
 
 }

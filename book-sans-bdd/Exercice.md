@@ -8,7 +8,7 @@ Votre objectif est d'améliorer la maintenance et la surveillance de l'applicati
 # Implémentation de l'Aspect :
 
 - Créer un aspect LoggingAspect pour logger l'entrée et la sortie de chaque méthode de LibraryService, incluant les arguments de méthode et les valeurs de retour (Un Logger en stdout).
-- Créer un aspect PerformanceAspect pour mesurer le temps d'exécution de chaque méthode de LibraryService. Utiliser System.currentTimeMillis() pour calculer le temps d'exécution.
+- Créer un aspect PerformanceAspect pour mesurer le temps d'exécution de chaque méthode de BookService. Utiliser System.currentTimeMillis() ou System.nanoTime() pour calculer le temps d'exécution.
 - Créer un aspect ExceptionAspect pour attraper l'exception lever dans le cas ou lors de la suppresion et la recuperation des livre ne trouve rien.
 
 # Partie 2

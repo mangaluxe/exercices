@@ -1,5 +1,8 @@
 package org.example.booksansbdd.service;
 
+import org.example.booksansbdd.annotation.ExceptionHandler;
+import org.example.booksansbdd.annotation.Log;
+import org.example.booksansbdd.annotation.Performance;
 import org.example.booksansbdd.entity.Book;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,9 @@ public class BookService {
     /**
      * Récupérer un livre par ID
      */
+    @ExceptionHandler
+    @Log
+    @Performance
     public Book getBook(int id) {
         if (!books.containsKey(id)) {
             throw new RuntimeException("Livre introuvable avec id : " + id);
@@ -35,20 +41,20 @@ public class BookService {
     /**
      * Récupérer tous les livres
      */
+    @ExceptionHandler
+    @Log
+    @Performance
     public Collection<Book> getAllBooks() {
         return books.values();
     }
 
-    public void displayBooks() {
-        for (Book book : books.values()) {
-            System.out.println(book);
-        }
-    }
-
     // ----- Create -----
 
+    @ExceptionHandler
+    @Log
+    @Performance
     public void addBook(Book book) {
-        if (book.getId() == 0) { // Si l'ID n'est pas défini
+        if (book.getId() == 0) { // Vérifie si l'ID n'est pas défini
             book.setId(nextId++);
         }
 
@@ -59,6 +65,9 @@ public class BookService {
 
     // ----- Update -----
 
+    @ExceptionHandler
+    @Log
+    @Performance
     public void updateBook(int id, Book updatedBook) {
         if (!books.containsKey(id)) {
             throw new RuntimeException("Livre introuvable avec id : " + id);
@@ -72,6 +81,9 @@ public class BookService {
 
     // ----- Delete -----
 
+    @ExceptionHandler
+    @Log
+    @Performance
     public void deleteBook(int id) {
         if (!books.containsKey(id)) {
             throw new RuntimeException("Livre introuvable avec id  : " + id);

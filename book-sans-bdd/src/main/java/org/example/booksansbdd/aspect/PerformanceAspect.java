@@ -3,6 +3,7 @@ package org.example.booksansbdd.aspect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.example.booksansbdd.annotation.Performance;
 import org.springframework.stereotype.Component;
 
 
@@ -10,30 +11,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class PerformanceAspect {
 
-    @Around("execution(* org.example.booksansbdd.service.*.*(..))")
-    public Object around (ProceedingJoinPoint proceedingJoinPoint) {
-
+    /**
+     * Mesure le temps d'exécution des méthodes annotées avec @Performance
+     */
+    @Around("@annotation(performance)")
+    public Object around(ProceedingJoinPoint proceedingJoinPoint, Performance performance) throws Throwable {
+        // long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime(); // Début
         try {
-            System.out.println("Around cut"); // Log avant l'exécution de la méthode
-
-            Object[] args = proceedingJoinPoint.getArgs(); // Récupère les arguments passés à la méthode interceptée
-            System.out.println(args);
-
-            Object result = proceedingJoinPoint.proceed(); // Exécute la méthode originale et récupère son résultat
-            return result;
-
+            System.out.println("Méthode interceptée : " + proceedingJoinPoint.getSignature().getName());
+            return proceedingJoinPoint.proceed();
         }
         catch (Throwable e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erreur dans PerformanceAspect : " + e.getMessage());
         }
         finally {
-            return null;
+            // long endTime = System.currentTimeMillis();
+            long endTime = System.nanoTime(); // Fin
+            System.out.println("Temps d'exécution : " + (endTime - startTime) + " nanosec");
         }
-
     }
-
-
-
-
 
 }

@@ -4,6 +4,7 @@ package org.example.booksansbdd.entity;
 Ordre pour créer et structurer un projet Spring Boot :
 
 - Configurer pom.xml
+
 - Créer les fichiers :
 1. entity
 2. service
