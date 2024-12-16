@@ -1,4 +1,4 @@
-package org.example;
+package org.example.ex1;
 
 /* Exercice Java :
 Crée une classe `MonPremierThread` qui étend `Thread` et redéfinit la méthode `run()` pour afficher un message
@@ -9,11 +9,10 @@ Dans la méthode `main`, crée et démarre 3 threads de cette classe.
 public class Main {
     public static void main(String[] args) {
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             Thread thread = new Thread(new MonPremierThread("Thread-" + i));
             thread.start();
         }
-
 
     }
 }

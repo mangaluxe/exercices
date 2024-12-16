@@ -1,4 +1,4 @@
-package org.example;
+package org.example.ex1;
 
 public class MonPremierThread extends Thread {
 
