@@ -30,8 +30,8 @@ public class Main {
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
         for (int i = 1; i <= 10; i++) {
-            int finalI = i;
-            executor.execute(() -> System.out.println("Tâche " + finalI + " exécutée par " + Thread.currentThread().getName()));
+            final int j = i; // On doit mettre en final
+            executor.submit(() -> System.out.println("Tâche " + j + " exécutée par " + Thread.currentThread().getName()));
         }
         executor.shutdown();
 
