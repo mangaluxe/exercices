@@ -2,7 +2,7 @@ package org.example.ex2;
 
 public class MaTacheRunnable implements Runnable {
 
-    private int nombre;
+    private final int nombre;
 
     public MaTacheRunnable(int nombre) {
         this.nombre = nombre;

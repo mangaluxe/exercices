@@ -2,18 +2,11 @@ package org.example.ex1;
 
 public class MonPremierThread extends Thread {
 
-    private final String threadName;
-
-    public MonPremierThread(String threadName) {
-        this.threadName = threadName;
-    }
-
     @Override
     public void run() {
-//        super.run();
 
         for (int i = 1; i <= 10; i++) {
-            System.out.println(threadName + " - Compteur : " + i);
+            System.out.println(getName() + " - Compteur : " + i);
         }
         try {
             Thread.sleep(500);

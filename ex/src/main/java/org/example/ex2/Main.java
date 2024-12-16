@@ -17,12 +17,12 @@ public class Main {
     public static void main(String[] arg) {
 
         for (int i = 1; i <= 5; i++) {
-            MaTacheRunnable t2 = new MaTacheRunnable(i);
-            Thread thread2 = new Thread(t2);
-            thread2.start();
+            MaTacheRunnable tache = new MaTacheRunnable(i);
+            Thread thread = new Thread(tache);
+            thread.start();
 
-//            Thread thread2 = new Thread(new MaTacheRunnable(i)); // Marche aussi
-//            thread2.start();
+//            Thread thread = new Thread(new MaTacheRunnable(i)); // Marche aussi
+//            thread.start();
         }
 
     }

@@ -10,7 +10,7 @@ public class CalculateurCallable implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         int cube = nombre * nombre * nombre;
         return cube;
     }
