@@ -23,6 +23,8 @@ public class Main {
 
         Thread[] threads = new Thread[10];
 
+        // System.out.println(threads.length); // 10
+
         for (int i = 0; i < threads.length; i++) {
 
             threads[i] = new Thread(() -> {
@@ -31,15 +33,19 @@ public class Main {
                 }
             });
         }
-        return  threads;
+        return threads;
     }
 
 
     public static void main(String[] args) throws InterruptedException {
 
         Thread[] atomicThreads = createAtomicThreads();
-        for (Thread t : atomicThreads) t.start();
-        for (Thread t : atomicThreads) t.join();
+        for (Thread t : atomicThreads) {
+            t.start();
+        }
+        for (Thread t : atomicThreads) {
+            t.join();
+        }
         System.out.println("Valeur finale du compteur : " + compteur.get()); // Affiche: Valeur finale du compteur : 10000
 
     }
