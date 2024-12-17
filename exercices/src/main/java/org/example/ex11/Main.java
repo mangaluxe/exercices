@@ -48,41 +48,41 @@ Solde final : 50
 
 public class Main {
 
-    private static final Object lock = new Object();
+//    private static final Object lock = new Object();
 
-    /**
-     * Générer des IDs uniques
-     */
-    static class IdGenerator {
-        private static int id = 0;
-
-        public static int generatedId() {
-            return id++;
-        }
-    }
-
-    /**
-     * Méthode pour créer des threads
-     */
-    private static Thread[] createThreads(Runnable task) {
-        Thread[] threads = new Thread[5];
-        for (int i = 0; i < threads.length; i++) {
-            threads[i] = new Thread(task);
-        }
-        return threads;
-    }
-
-    /**
-     * Méthode pour démarrer et attendre la fin de mes threads
-     */
-    private static void runThreads(Thread[] threads) throws InterruptedException {
-        for (Thread thread : threads) {
-            thread.start();
-        }
-        for (Thread thread : threads) {
-            thread.join();
-        }
-    }
+//    /**
+//     * Générer des IDs uniques
+//     */
+//    static class IdGenerator {
+//        private static int id = 0;
+//
+//        public static int generatedId() {
+//            return id++;
+//        }
+//    }
+//
+//    /**
+//     * Méthode pour créer des threads
+//     */
+//    private static Thread[] createThreads(Runnable task) {
+//        Thread[] threads = new Thread[5];
+//        for (int i = 0; i < threads.length; i++) {
+//            threads[i] = new Thread(task);
+//        }
+//        return threads;
+//    }
+//
+//    /**
+//     * Méthode pour démarrer et attendre la fin de mes threads
+//     */
+//    private static void runThreads(Thread[] threads) throws InterruptedException {
+//        for (Thread thread : threads) {
+//            thread.start();
+//        }
+//        for (Thread thread : threads) {
+//            thread.join();
+//        }
+//    }
 
 
     public static void main(String[] args) {
@@ -90,15 +90,21 @@ public class Main {
         BankAccount account = new BankAccount(0);
 
         Thread t1 = new Thread(() -> {
-            account.retirer(10);
+            for (int i = 0; i < 5; i++) {
+                account.retirer(10);
+            }
         }, "Thread-1");
 
         Thread t2 = new Thread(() -> {
-            account.retirer(10);
+            for (int i = 0; i < 5; i++) {
+                account.deposer(10);
+            }
         }, "Thread-2");
 
         Thread t3 = new Thread(() -> {
-            account.retirer(10);
+            for (int i = 0; i < 5; i++) {
+                account.deposer(10);
+            }
         }, "Thread-3");
 
         t1.start();
@@ -113,6 +119,8 @@ public class Main {
         catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Solde final : " + account.getBalance());
 
     }
 
