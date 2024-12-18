@@ -89,32 +89,67 @@ public class Main {
 
         BankAccount account = new BankAccount(0);
 
-        Thread t1 = new Thread(() -> {
+        // ----- Méthode 1 -----
+
+//        Thread t1 = new Thread(() -> {
+//            for (int i = 0; i < 5; i++) {
+//                account.retirer(10);
+//            }
+//        }, "Thread-1");
+//
+//        Thread t2 = new Thread(() -> {
+//            for (int i = 0; i < 5; i++) {
+//                account.deposer(10);
+//            }
+//        }, "Thread-2");
+//
+//        Thread t3 = new Thread(() -> {
+//            for (int i = 0; i < 5; i++) {
+//                account.deposer(10);
+//            }
+//        }, "Thread-3");
+//
+//        t1.start();
+//        t2.start();
+//        t3.start();
+//
+//        try {
+//            t1.join();
+//            t2.join();
+//            t3.join();
+//        }
+//        catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println("Solde final : " + account.getBalance());
+
+        // ----- Méthode 2 -----
+
+        Runnable depositTask = () -> {
+            for (int i = 0; i < 5; i++) {
+                account.deposer(10);
+            }
+        };
+
+        Runnable withdrawTask = () -> {
             for (int i = 0; i < 5; i++) {
                 account.retirer(10);
             }
-        }, "Thread-1");
+        };
 
-        Thread t2 = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
-                account.deposer(10);
-            }
-        }, "Thread-2");
+        Thread thread1 = new Thread(withdrawTask, "Thread-1");
+        Thread thread2 = new Thread(depositTask, "Thread-2");
+        Thread thread3 = new Thread(depositTask, "Thread-3");
 
-        Thread t3 = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
-                account.deposer(10);
-            }
-        }, "Thread-3");
-
-        t1.start();
-        t2.start();
-        t3.start();
+        thread1.start();
+        thread2.start();
+        thread3.start();
 
         try {
-            t1.join();
-            t2.join();
-            t3.join();
+            thread1.join();
+            thread2.join();
+            thread3.join();
         }
         catch (InterruptedException e) {
             e.printStackTrace();

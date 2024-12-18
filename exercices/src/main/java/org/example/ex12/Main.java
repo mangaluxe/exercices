@@ -40,15 +40,19 @@ public class Main {
 
         SharedResource sharedResource = new SharedResource();
 
+        // ----- Méthode 1 -----
+
         Thread t1 = new Thread(() -> {
             for (int i = 0; i < 5; i++) {
-                sharedResource.addElement(i);
+                sharedResource.deleteElement(i);
+//                sharedResource.addElement(i);
             }
         }, "Thread-1");
 
         Thread t2 = new Thread(() -> {
             for (int i = 0; i < 5; i++) {
-                sharedResource.deleteElement(i);
+                sharedResource.addElement(i);
+//                sharedResource.deleteElement(i);
             }
         }, "Thread-2");
 
@@ -58,6 +62,35 @@ public class Main {
         try {
             t1.join();
             t2.join();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("État final de la liste : " + sharedResource.getSharedList());
+
+        // ----- Méthode 2 -----
+
+        Runnable addTask = () -> {
+            for (int i = 0; i < 5; i++) {
+                sharedResource.addElement(i);
+            }
+        };
+
+        Runnable removeTask = () -> {
+            for (int i = 0; i < 5; i++) {
+                sharedResource.deleteElement(i);
+            }
+        };
+
+        Thread thread1 = new Thread(addTask, "Thread-1");
+        Thread thread2 = new Thread(removeTask, "Thread-2");
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
         }
         catch (InterruptedException e) {
             e.printStackTrace();

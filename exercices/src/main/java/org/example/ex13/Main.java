@@ -26,7 +26,7 @@ Tâche-2 tente d'utiliser l'imprimante...
 Tâche-1 a acquis le verrou et utilise l'imprimante.
 Tâche-1 a terminé d'utiliser l'imprimante et libère le verrou.
 Tâche-3 a acquis le verrou et utilise l'imprimante.
-Tâche-2 n'a pas pu accéder à l'imprimante (temps d'attente dépassé).
+Tâche-2 n'a pas pu accéder à l'imprimante .
 Tâche-3 a terminé d'utiliser l'imprimante et libère le verrou.
 Toutes les tâches sont terminées.
 
@@ -44,5 +44,47 @@ Tâche-2 a terminé d'utiliser l'imprimante et libère le verrou.
 Toutes les tâches sont terminées.
 */
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+
 public class Main {
+    public static void main(String[] args) {
+
+        Imprimante imprimante = new Imprimante();
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 3; i++) {
+                imprimante.utiliser();
+            }
+        }, "Tâche-1");
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 3; i++) {
+                imprimante.utiliser2();
+            }
+        }, "Tâche-2");
+
+        Thread t3 = new Thread(() -> {
+            for (int i = 0; i < 3; i++) {
+                imprimante.utiliser3();
+            }
+        }, "Tâche-3");
+
+        t1.start();
+        t2.start();
+        t3.start();
+
+        try {
+            t1.join();
+            t2.join();
+            t3.join();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Toutes les tâches sont terminées.");
+
+    }
 }

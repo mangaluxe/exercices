@@ -8,6 +8,7 @@ public class SharedResource {
     // ----- Propriétés -----
 
     private final List<Integer> sharedList = new ArrayList<>();
+    private final Object object = new Object();
 
     // ----- Getter -----
 
@@ -17,18 +18,22 @@ public class SharedResource {
 
     // ----- Méthodes -----
 
-    public synchronized void addElement(int element) {
-        sharedList.add(element);
-        System.out.println(Thread.currentThread().getName() + " a ajouté " + element);
+    public void addElement(int element) {
+        synchronized (object) {
+            sharedList.add(element);
+            System.out.println(Thread.currentThread().getName() + " a ajouté " + element);
+        }
     }
 
-    public synchronized void deleteElement(int element) {
-        if (!sharedList.isEmpty()) {
-            sharedList.remove(element);
-            System.out.println(Thread.currentThread().getName() + " a supprimé " + element);
-        }
-        else {
-            System.out.println(Thread.currentThread().getName() + " n'a rien à supprimer.");
+    public void deleteElement(int element) {
+        synchronized (object) {
+            if (!sharedList.isEmpty()) {
+                int removed = sharedList.remove(0);
+                System.out.println(Thread.currentThread().getName() + " a supprimé " + removed);
+            }
+            else {
+                System.out.println(Thread.currentThread().getName() + " n'a rien à supprimer.");
+            }
         }
     }
 
