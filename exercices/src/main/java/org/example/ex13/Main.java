@@ -53,23 +53,38 @@ public class Main {
 
         Imprimante imprimante = new Imprimante();
 
-        Thread t1 = new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                imprimante.utiliser();
-            }
-        }, "Tâche-1");
+        // ----- Méthoode 1 -----
 
-        Thread t2 = new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                imprimante.utiliser2();
-            }
-        }, "Tâche-2");
+//        Thread t1 = new Thread(() -> {
+//            for (int i = 0; i < 3; i++) {
+//                imprimante.imprimer("Tâche-1");
+//            }
+//        }, "Tâche-1");
+//
+//        Thread t2 = new Thread(() -> {
+//            for (int i = 0; i < 3; i++) {
+//                imprimante.imprimer("Tâche-2");
+//            }
+//        }, "Tâche-2");
+//
+//        Thread t3 = new Thread(() -> {
+//            for (int i = 0; i < 3; i++) {
+//                imprimante.imprimer("Tâche-3");
+//            }
+//        }, "Tâche-3");
 
-        Thread t3 = new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                imprimante.utiliser3();
-            }
-        }, "Tâche-3");
+        // ----- Méthode 2 -----
+
+        Runnable printingTask = () -> {
+            String taskName = Thread.currentThread().getName();
+            imprimante.imprimer(taskName);
+        };
+
+        Thread t1 = new Thread(printingTask, "Tâche-1");
+        Thread t2 = new Thread(printingTask, "Tâche-2");
+        Thread t3 = new Thread(printingTask, "Tâche-3");
+
+        // ----- -----
 
         t1.start();
         t2.start();
