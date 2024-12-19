@@ -23,8 +23,9 @@ public class Main {
             for (int i = 0; i < threadCount; i++) {
                 executor.execute(() -> {
                     try {
-                        Thread.sleep(1000);// simule une tache
-                    } catch (InterruptedException e) {
+                        Thread.sleep(1000); // Simule une tache
+                    }
+                    catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
                 });
