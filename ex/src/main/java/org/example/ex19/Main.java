@@ -64,26 +64,35 @@ public class Main {
 
         ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue<>();
 
+        // Producteur
         Runnable producer = () -> {
             for (int i = 0; i < 10; i++) {
 //                String element = Thread.currentThread().getName() + "-Element-" + i;
                 String element = "Producer-Element-" + i;
                 queue.add(element);
+//                System.out.println(Thread.currentThread().getName() + " a ajouté " + element);
                 System.out.println("Producer a ajouté : " + element);
-                try {
-                    Thread.sleep(100);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(100);
+//                }
+//                catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         };
 
+        // Consommateur
         Runnable consumer = () -> {
-            while (!queue.isEmpty()) {
-                String element = queue.poll(); // Retire et retourne le premier élément
-                System.out.println("Consumer a retiré : " + element);
+            for (int i = 0; i < 10; i++) {
+                String element = queue.poll(); // Retire et retourne le premier élément ou null si la file est vide
+                if (element != null) {
+                    // System.out.println(Thread.currentThread().getName() + " a retiré " + element);
+                    System.out.println("Consumer a retiré : " + element);
+                }
+                else {
+                     System.out.println(Thread.currentThread().getName() + " n'a trouvé aucun élément à retirer");
+                }
                 try {
                     Thread.sleep(100);
                 }
@@ -93,16 +102,27 @@ public class Main {
             }
         };
 
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-        executor.submit(producer);
-        executor.submit(consumer);
+//        ExecutorService executor = Executors.newFixedThreadPool(2);
+//
+//        executor.submit(producer);
+//        executor.submit(consumer);
+//
+//        executor.shutdown();
+//
+//        while (!executor.isTerminated()) {
+//            Thread.sleep(100);
+//        }
+//
+//        System.out.println("État final de la file : " + queue);
 
-        executor.shutdown();
+        Thread producerThread = new Thread(producer, "Producer");
+        Thread consumerThread = new Thread(consumer, "Consumer");
+        producerThread.start();
+        consumerThread.start();
+        producerThread.join();
+        consumerThread.join();
 
-        while (!executor.isTerminated()) {
-            Thread.sleep(100);
-        }
+        System.out.println("Etat final de la liste : " + queue);
 
-        System.out.println("État final de la file : " + queue);
     }
 }
