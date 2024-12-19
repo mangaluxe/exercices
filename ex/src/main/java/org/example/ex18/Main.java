@@ -11,48 +11,34 @@ Liste finale des produits : [Thread-1-Produit-0, Thread-2-Produit-0, Thread-1-Pr
 */
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-
-        List<Integer> copyOnWriteList = new CopyOnWriteArrayList<>();
-
-        addElement(copyOnWriteList);
-
-        System.out.println("Liste finale des produits : " + copyOnWriteList);
-
-    }
-
-
-    private static void addElement(List<Integer> list) throws InterruptedException {
+        List<String> products = new CopyOnWriteArrayList<>();
 
         Runnable task = () -> {
-            for (int i = 0; i < 5; i++) {
-                list.add(i);
-
-                String[] produits = {"Produit-0", "Produit-1", "Produit-2", "Produit-3", "Produit-4", "Produit-5", "Produit-6", "Produit-7", "Produit-8", "Produit-9"};
-                Random random = new Random();
-                String produit = produits[random.nextInt(produits.length)];
-
-                System.out.println(Thread.currentThread().getName() + "-" + produit);
+            for (int i = 0; i < 10; i++) {
+                String product = Thread.currentThread().getName() + "Produit " + i;
+                products.add(product);
+                System.out.println(product);
             }
-
         };
 
-        Thread thread1 = new Thread(task, "Thread-1");
-        Thread thread2 = new Thread(task, "Thread-2");
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        executor.submit(task);
+        executor.submit(task);
 
-        thread1.start();
-        thread2.start();
+        executor.shutdown();
 
-        thread1.join();
-        thread2.join();
+        while (!executor.isTerminated()) {
+            Thread.sleep(100);
+        }
 
-
+        System.out.println("Liste finale : " + products);
+        System.out.println("Taille finale: " + products.size());
     }
-
-
 
 }
