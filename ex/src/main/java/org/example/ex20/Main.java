@@ -16,7 +16,7 @@ public class Main {
         // ----- Threads virtuels -----
 
         int threadCount = 100;
-        long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis(); // Mesure temps
 
         long endTime;
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
@@ -52,7 +52,8 @@ public class Main {
                 });
                 thread.start();
             }
-        } catch (OutOfMemoryError | Exception e) {
+        }
+        catch (OutOfMemoryError | Exception e) {
             System.out.println("Erreur avec les threads natif");
         }
 
